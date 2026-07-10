@@ -1,0 +1,27 @@
+{
+  "teleportCountdownTicks": "How many ticks should pass before teleporting the player, starting from when the teleportation is triggerred.",
+
+  "teleportCooldownTicks": "How many ticks should pass before the player can trigger a teleport again, starting from when the player is last teleported.",
+
+  "moveOnTeleport": "Whether the player can move about when waiting for the teleport countdown.",
+
+  "cancelTeleportOnHurt": "Whether the teleportation should be cancelled if the player is hurt by any source during the teleport countdown.",
+
+  "cancelTeleportOnPlayerHurt": "Whether the teleportation should be cancelled if the player is hurt by another player during the teleport countdown. Overridden if cancelTeleportOnHurt is set to true.",
+
+  "cancelTeleportOnChatMessage": "Whether the teleportation should be cancelled if the player sends any chat messages.",
+
+  "startTeleportWhileMoving": "Whether the teleportation should be triggered if the player is moving (flying, falling, walking, etc).",
+
+  "enablePhomes": "Whether public homes should be created or teleported to.",
+
+  "phomeLimit": "How many public homes can be collectively created. Has priority over phomeLimitPerPlayer, set to 0 for no limit",
+
+  "phomeLimitPerPlayer": "How many public homes can be created per player. Set to 0 for no limit.",
+
+  "modifyOtherPhomes": "Whether players can edit (rename, change location of, etc) public homes that are not created by them.",
+
+  "enableHomes": "Whether private homes should be created or teleported to.",
+
+  "homeLimit": "How many private homes can be created per player. Set to 0 for no limit."
+}

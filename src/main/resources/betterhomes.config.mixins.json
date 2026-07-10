@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "lucas.betterhomes.config.mixins",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "SaveConfigs"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
