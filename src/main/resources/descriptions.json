@@ -3,7 +3,7 @@
 
   "teleportCooldownTicks": "How many ticks should pass before the player can trigger a teleport again, starting from when the player is last teleported.",
 
-  "moveOnTeleport": "Whether the player can move about when waiting for the teleport countdown.",
+  "cancelTeleportOnMove": "Whether the player can move about when waiting for the teleport countdown.",
 
   "cancelTeleportOnHurt": "Whether the teleportation should be cancelled if the player is hurt by any source during the teleport countdown.",
 
@@ -21,7 +21,13 @@
 
   "modifyOtherPhomes": "Whether players can edit (rename, change location of, etc) public homes that are not created by them.",
 
+  "viewPhomeLocation": "Whether players can view locations of public homes directly without teleporting to them",
+
   "enableHomes": "Whether private homes should be created or teleported to.",
 
-  "homeLimit": "How many private homes can be created per player. Set to 0 for no limit."
+  "homeLimit": "How many private homes can be created per player. Set to 0 for no limit.",
+
+  "teleportFacing": "Whether the player's angle should be changed when they teleport to a specific location.",
+
+  "takeEnderPearlDamage": "Whether the player should take the default ender pearl damage when they teleport."
 }

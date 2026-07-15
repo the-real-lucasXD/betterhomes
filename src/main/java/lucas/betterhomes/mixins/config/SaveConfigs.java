@@ -1,7 +1,7 @@
-package lucas.betterhomes.config.mixins;
+package lucas.betterhomes.mixins.config;
 
 import lucas.betterhomes.Betterhomes;
-import lucas.betterhomes.config.ConfigManager;
+import lucas.betterhomes.config.Configs;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,20 +15,20 @@ public class SaveConfigs {
   @Inject(method = "saveEverything", at = @At("HEAD"))
   private void onWorldSave(boolean silent, boolean flush, boolean force, CallbackInfoReturnable<Boolean> cir) {
     try {
-      ConfigManager.save();
+      Configs.save();
       Betterhomes.LOGGER.info("Saved configs");
     } catch (Exception e) {
-      Betterhomes.handleException(e, "saving configs");
+      Betterhomes.error(e);
     }
   }
 
   @Inject(method = "stopServer", at = @At("HEAD"))
   private void onWorldClose(CallbackInfo ci) {
     try {
-      ConfigManager.save();
+      Configs.save();
       Betterhomes.LOGGER.info("SERVER CLOSING: Saved configs");
     } catch (Exception e) {
-      Betterhomes.handleException(e, "saving configs for server shutdown");
+      Betterhomes.error(e);
     }
   }
 }

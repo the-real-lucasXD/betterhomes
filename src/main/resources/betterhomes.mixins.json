@@ -1,12 +1,20 @@
 {
-	"required": true,
-	"package": "lucas.betterhomes.mixins",
-	"compatibilityLevel": "JAVA_25",
-	"mixins": [],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "lucas.betterhomes.mixins",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "TeleportCommand",
+    "config.SaveConfigs",
+    "config.SaveServer",
+    "teleport.TickCountdown",
+    "teleport.cancellers.ChatMessage",
+    "teleport.cancellers.Damage",
+    "teleport.cancellers.Movement"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }
