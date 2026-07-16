@@ -4,12 +4,20 @@
   "compatibilityLevel": "JAVA_25",
   "mixins": [
     "TeleportCommand",
-    "config.SaveConfigs",
-    "config.SaveServer",
+    "homes.InitializePlayerHomes",
+    "homes.commands.EditHomeCommand",
+    "homes.commands.EditPhomeCommand",
+    "homes.commands.HomeCommand",
+    "homes.commands.PhomeCommand",
+    "homes.commands.SetHomeCommand",
+    "homes.commands.SetPhomeCommand",
+    "storage.SaveConfigs",
+    "storage.SaveServer",
     "teleport.TickCountdown",
     "teleport.cancellers.ChatMessage",
     "teleport.cancellers.Damage",
-    "teleport.cancellers.Movement"
+    "teleport.cancellers.Movement",
+    "teleport.commands.TpaCommand"
   ],
   "injectors": {
     "defaultRequire": 1

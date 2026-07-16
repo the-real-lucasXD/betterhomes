@@ -27,7 +27,11 @@
 
   "homeLimit": "How many private homes can be created per player. Set to 0 for no limit.",
 
-  "teleportFacing": "Whether the player's angle should be changed when they teleport to a specific location.",
+  "teleportFacing": "Whether the players angle should be changed when they teleport to a specific location.",
 
-  "takeEnderPearlDamage": "Whether the player should take the default ender pearl damage when they teleport."
+  "takeEnderPearlDamage": "Whether the player should take the default ender pearl damage when they teleport.",
+
+  "useDialogs": "Whether to prioritize using dialogs to display any menus. When disabled, chat and inbluit GUI (e.g. chests) will be used instead. Suitable for servers that backport to before 1.21.6.",
+
+  "enableTpa": "Whether the player should be able to teleport to other players/allow other players to teleport to them."
 }

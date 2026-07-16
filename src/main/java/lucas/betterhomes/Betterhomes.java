@@ -1,6 +1,7 @@
 package lucas.betterhomes;
 
-import lucas.betterhomes.config.Configs;
+import lucas.betterhomes.storage.ConfigManager;
+import lucas.betterhomes.storage.TeleportManager;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.server.MinecraftServer;
@@ -19,7 +20,8 @@ public class Betterhomes implements ModInitializer {
 	@Override
 	public void onInitialize() {
     try {
-      Configs.load();
+      TeleportManager.load();
+      ConfigManager.load();
       LOGGER.info("Successfully loaded betterhomes mod");
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -30,8 +32,8 @@ public class Betterhomes implements ModInitializer {
     Betterhomes.LOGGER.error(e.getMessage());
   }
   
-  public static Configs configs() {
-    return Configs.INSTANCE;
+  public static ConfigManager configs() {
+    return ConfigManager.INSTANCE;
   }
   
   public static ServerPlayer getPlayer(String uuid) {

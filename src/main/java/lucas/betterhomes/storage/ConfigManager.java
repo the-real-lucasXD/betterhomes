@@ -1,4 +1,4 @@
-package lucas.betterhomes.config;
+package lucas.betterhomes.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,20 +8,20 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class Configs {
+public class ConfigManager {
   private static final Path path = FabricLoader.getInstance().getConfigDir().resolve("betterhomes/config.json");
   private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-  public static Configs INSTANCE = new Configs();
+  public static ConfigManager INSTANCE = new ConfigManager();
 
   public static void load() throws Exception {
     if (Files.exists(path)) {
-      INSTANCE = GSON.fromJson(Files.readString(path), Configs.class);
+      INSTANCE = GSON.fromJson(Files.readString(path), ConfigManager.class);
       if (INSTANCE == null) {
-        INSTANCE = new Configs();
+        INSTANCE = new ConfigManager();
         save();
       }
     } else {
-      INSTANCE = new Configs();
+      INSTANCE = new ConfigManager();
       save();
     }
   }
@@ -48,4 +48,6 @@ public class Configs {
   public Config<Integer> homeLimit = new Config<>(5, "homeLimit");
   public Config<Boolean> teleportFacing = new Config<>(true, "teleportFacing");
   public Config<Boolean> takeEnderPearlDamage = new Config<>(false, "takeEnderPearlDamage");
+  public Config<Boolean> useDialogs = new Config<>(true, "useDialogs");
+  public Config<Boolean> enableTpa = new Config<>(true, "enableTpa");
 }

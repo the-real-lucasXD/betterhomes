@@ -1,4 +1,4 @@
-package lucas.betterhomes.mixins.config;
+package lucas.betterhomes.mixins.storage;
 
 import lucas.betterhomes.Betterhomes;
 import net.minecraft.server.MinecraftServer;

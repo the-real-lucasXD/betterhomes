@@ -1,7 +1,8 @@
-package lucas.betterhomes.mixins.config;
+package lucas.betterhomes.mixins.storage;
 
 import lucas.betterhomes.Betterhomes;
-import lucas.betterhomes.config.Configs;
+import lucas.betterhomes.storage.ConfigManager;
+import lucas.betterhomes.storage.TeleportManager;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +16,8 @@ public class SaveConfigs {
   @Inject(method = "saveEverything", at = @At("HEAD"))
   private void onWorldSave(boolean silent, boolean flush, boolean force, CallbackInfoReturnable<Boolean> cir) {
     try {
-      Configs.save();
+      TeleportManager.save();
+      ConfigManager.save();
       Betterhomes.LOGGER.info("Saved configs");
     } catch (Exception e) {
       Betterhomes.error(e);
@@ -25,7 +27,8 @@ public class SaveConfigs {
   @Inject(method = "stopServer", at = @At("HEAD"))
   private void onWorldClose(CallbackInfo ci) {
     try {
-      Configs.save();
+      TeleportManager.save();
+      ConfigManager.save();
       Betterhomes.LOGGER.info("SERVER CLOSING: Saved configs");
     } catch (Exception e) {
       Betterhomes.error(e);

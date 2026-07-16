@@ -1,5 +1,8 @@
 package lucas.betterhomes.teleport;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Maps;
 import lucas.betterhomes.Betterhomes;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -12,8 +15,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 
-import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TeleportCountdown {
   public boolean cancelled = false;
@@ -27,7 +30,8 @@ public class TeleportCountdown {
     BossEvent.BossBarOverlay.PROGRESS
   );
   
-  public static HashMap<String, TeleportCountdown> countdowns = new HashMap<>();
+  public static ConcurrentHashMap<String, TeleportCountdown> countdowns = new ConcurrentHashMap<>();
+  public static BiMap<String, String> tpaRequests = Maps.synchronizedBiMap(HashBiMap.create());
   
   public TeleportCountdown(LocationData destination, ServerPlayer player) {
     ticks = Betterhomes.configs().teleportCountdownTicks.get()+1;
@@ -77,5 +81,11 @@ public class TeleportCountdown {
   
   public static TeleportCountdown getCountdown(ServerPlayer player) {
     return countdowns.get(player.getStringUUID());
+  }
+  
+  public static boolean inCountdown(ServerPlayer player) {
+    if (getCountdown(player) == null) return false;
+    if (tpaRequests.containsKey(player.getStringUUID())) return false;
+    return !tpaRequests.containsValue(player.getStringUUID());
   }
 }
