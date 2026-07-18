@@ -17,7 +17,9 @@
     "teleport.cancellers.ChatMessage",
     "teleport.cancellers.Damage",
     "teleport.cancellers.Movement",
-    "teleport.commands.TpaCommand"
+    "teleport.commands.TpAcceptCommand",
+    "teleport.commands.TpaCommand",
+    "teleport.commands.TpaHereCommand"
   ],
   "injectors": {
     "defaultRequire": 1

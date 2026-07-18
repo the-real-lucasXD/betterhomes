@@ -1,5 +1,5 @@
 {
-  "no-dialog": "chat_[\"\",{\"text\":\"There already exists a ${type} with this name. Do you wish to change its location here?\\n\"},{\"text\":\"[YES]\",\"color\":\"green\",\"click_event\":{\"action\":\"run_command\",\"command\":\"/edit${type} ${name} sethere\"}},{\"text\":\" \\u0020[NO - ignore message]\",\"color\":\"red\"}]",
+  "no-dialog": "chat_[{\"text\":\"There already exists a ${type} with this name. Do you wish to change its location here?\\n\"},{\"text\":\"[YES]\",\"color\":\"green\",\"click_event\":{\"action\":\"run_command\",\"command\":\"/edit${type} ${name} sethere\"}},{\"text\":\" \\u0020[NO - ignore message]\",\"color\":\"red\"}]",
 
   "dialog": "dialog_{type:\"minecraft:confirmation\",title:\"Override home?\",body:{type:\"minecraft:plain_message\",contents:\"There already exists a home with this name. Do you wish to change its location here?\"},inputs:[],yes:{label:{text:\"Yes\",color:\"green\"},action:{type:\"minecraft:run_command\",command:\"edit${type} ${name} sethere\"}},no:{label:{text:\"No\",color:\"red\"}}}"
 }

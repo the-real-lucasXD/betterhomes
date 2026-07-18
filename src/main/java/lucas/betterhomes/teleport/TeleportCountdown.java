@@ -1,8 +1,5 @@
 package lucas.betterhomes.teleport;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.Maps;
 import lucas.betterhomes.Betterhomes;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -31,8 +28,7 @@ public class TeleportCountdown {
   );
   
   public static ConcurrentHashMap<String, TeleportCountdown> countdowns = new ConcurrentHashMap<>();
-  public static BiMap<String, String> tpaRequests = Maps.synchronizedBiMap(HashBiMap.create());
-  
+
   public TeleportCountdown(LocationData destination, ServerPlayer player) {
     ticks = Betterhomes.configs().teleportCountdownTicks.get()+1;
     this.destination = destination;
@@ -85,7 +81,6 @@ public class TeleportCountdown {
   
   public static boolean inCountdown(ServerPlayer player) {
     if (getCountdown(player) == null) return false;
-    if (tpaRequests.containsKey(player.getStringUUID())) return false;
-    return !tpaRequests.containsValue(player.getStringUUID());
+    return !TpaManager.tpaRequests.containsKey(player.getStringUUID());
   }
 }

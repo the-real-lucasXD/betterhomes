@@ -1,0 +1,5 @@
+{
+  "dialog": "chat_[{\"text\":\"${requester} \",\"bold\":true},{\"text\":\"has requested ${request}.\\n\"},{\"text\":\"[ACCEPT]\",\"color\":\"green\",\"click_event\":{action:\"run_command\",command:\"/tpaccept ${requester}\"}},{\"text\":\"[DENY]\",\"color\":\"red\", click_event:{action:\"run_command\",command:\"/tpdeny ${requester}\"}}]",
+
+  "no_dialog": "chat_[{\"text\":\"${requester} \",\"bold\":true},{\"text\":\"has requested ${request}.\\n\"},{\"text\":\"[ACCEPT]\",\"color\":\"green\",\"click_event\":{action:\"run_command\",command:\"/tpaccept ${requester}\"}},{\"text\":\"[DENY]\",\"color\":\"red\", click_event:{action:\"run_command\",command:\"/tpdeny ${requester}\"}}]"
+}
