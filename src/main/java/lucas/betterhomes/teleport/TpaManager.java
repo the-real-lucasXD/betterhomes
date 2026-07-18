@@ -44,11 +44,11 @@ public class TpaManager {
         ArrayList<Pair<String, String>> vars = new ArrayList<>();
         if (request.getSecond()) {
           vars.add(new Pair<>("prompt1", ""));
-          vars.add(new Pair<>("prompt2", "to you"));
+          vars.add(new Pair<>("prompt2", " to you"));
         } else {
-          vars.add(new Pair<>("prompt1", "You to"));
+          vars.add(new Pair<>("prompt1", "You to "));
           vars.add(new Pair<>("prompt2", ""));
-        } vars.add(new Pair<>("player", request.getFirst()));
+        } vars.add(new Pair<>("player", Betterhomes.getPlayer(request.getFirst()).getScoreboardName()));
         return vars;
       } else return new ArrayList<>();
     } else return new ArrayList<>();

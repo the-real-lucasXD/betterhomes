@@ -4,8 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.datafixers.util.Pair;
 import lucas.betterhomes.Betterhomes;
 import lucas.betterhomes.gui.GuiManager;
-import lucas.betterhomes.teleport.LocationData;
-import lucas.betterhomes.teleport.TeleportCountdown;
 import lucas.betterhomes.teleport.TpaManager;
 import net.minecraft.commands.*;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -25,13 +23,13 @@ import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
 @Mixin(Commands.class)
-public class TpAcceptCommand {
+public class TpDenyCommand {
   @Shadow @Final
   private CommandDispatcher<CommandSourceStack> dispatcher;
   
   @Inject(method = "<init>", at = @At("RETURN"))
   private void init(Commands.CommandSelection commandSelection, CommandBuildContext context, CallbackInfo ci) {
-    this.dispatcher.register(literal("tpaccept")
+    this.dispatcher.register(literal("tpdeny")
       .requires(_ -> Betterhomes.configs().enableTpa.get())
       .then(argument("player", EntityArgument.player())
         .executes(ctx -> {
@@ -40,18 +38,11 @@ public class TpAcceptCommand {
             Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID()
           ); for (Pair<String, Boolean> request : requests) {
             if (request.getFirst().equals(player.getStringUUID())) {
-              if (request.getSecond()) {
-                new TeleportCountdown(new LocationData(ctx.getSource().getPlayer()), player);
-                TpaManager.tpaRequests.remove(player.getStringUUID());
-                return 0;
-              } else if (!TeleportCountdown.inCountdown(ctx.getSource().getPlayer())) {
-                new TeleportCountdown(new LocationData(player), ctx.getSource().getPlayer());
-                TpaManager.tpaRequests.remove(player.getStringUUID());
-                return 0;
-              } else {
-                ctx.getSource().sendFailure(Component.literal("You are currently in a teleport!"));
-                return 0;
-              }
+              player.sendSystemMessage(
+                Component.literal(ctx.getSource().getPlayer().getScoreboardName() + " has denied your TPA request!"),
+                false
+              ); TpaManager.tpaRequests.remove(player.getStringUUID());
+              return 0;
             }
           } ctx.getSource().sendFailure(Component.literal("This player has not sent you an active request!"));
           return 0;
@@ -64,14 +55,14 @@ public class TpAcceptCommand {
           ctx.getSource().sendFailure(Component.literal("You don't have any incoming TPA requests!"));
           return 0;
         } else if (requests.size() == 1) {
-          dispatcher.execute("tpaccept " + Betterhomes.getPlayer(requests.getFirst().getFirst()).getScoreboardName(),
+          dispatcher.execute("tpdeny " + Betterhomes.getPlayer(requests.getFirst().getFirst()).getScoreboardName(),
             ctx.getSource()
           );
           return 0;
         } else {
           GuiManager.display(
             "select-tpa", ctx.getSource().getPlayer(),
-            new Pair<>("action", "accept"),
+            new Pair<>("action", "deny"),
             new Pair<>("options", GuiManager.loop(
               "select-tpa-option", TpaManager::getVars, new ArrayList<>(requests))
             )

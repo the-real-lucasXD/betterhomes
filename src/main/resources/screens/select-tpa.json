@@ -1,3 +1,3 @@
 {
-  "dialog": "dialog_{type:\"minecraft:multi_action\",title:\"Select TPA to ${action}\",body:{type:\"minecraft:plain_message\",contents:\"You have more than one incoming TPA request. Select the request to ${action}.\"},inputs:[],after_action:\"close\",columns:1,actions:[${options}]}"
+  "dialog": "dialog_{type:\"minecraft:multi_action\",title:\"Select TPA to ${action}\",body:{type:\"minecraft:plain_message\",contents:\"You have more than one incoming TPA request. Select the request to ${action}.\"},inputs:[],after_action:\"close\",columns:1,actions:${options}}"
 }

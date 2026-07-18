@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.regex.Matcher;
 
 public class GuiManager {
   @SafeVarargs
@@ -41,23 +42,31 @@ public class GuiManager {
       Objects.requireNonNull(Betterhomes.class.getResourceAsStream("/screens/" + identifier + ".json")),
       StandardCharsets.UTF_8
     )).getAsJsonObject();
-
-    String _final;
+    
+    String _final, _previous;
     if (Betterhomes.configs().useDialogs.get()) _final = json.get("dialog").getAsString();
     else _final = json.get("no-dialog").getAsString();
 
-    for (Pair<String, String> variable : variables)
-      _final = _final.replaceAll("\\$\\{"+variable.getFirst()+ "}", variable.getSecond());
+    do {
+      _previous = _final.intern();
+      for (Pair<String, String> variable : variables)
+        _final = _final.replaceAll("\\$\\{" + variable.getFirst() + "}", Matcher.quoteReplacement(variable.getSecond()));
+    } while (!_previous.equals(_final));
 
     return _final;
   }
 
-  @SafeVarargs @SuppressWarnings("unchecked")
-  public static String loop(String identifier, Function<Object, ArrayList<Pair<String, String>>> handler,
-    ArrayList<Object>... variables) {
+  @SuppressWarnings("unchecked")
+  public static String loop(
+    String identifier, Function<Object, ArrayList<Pair<String, String>>> handler, ArrayList<?> variables
+  ) {
     StringBuilder _final = new StringBuilder("[");
-    for (ArrayList<Object> variable : variables) _final.append(
-      format(identifier, handler.apply(variable).toArray(new Pair[0]))
-    ); return _final.append("]").toString();
+    
+    for (int i=0; i<variables.size(); i++) {
+      _final.append(format(identifier,handler.apply(variables.get(i)).toArray(new Pair[0])));
+      if (i < variables.size()-1) _final.append(",");
+    }
+    
+    return _final.append("]").toString();
   }
 }

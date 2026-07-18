@@ -38,12 +38,15 @@ public class TpaCommand {
           if (TeleportCountdown.inCountdown(ctx.getSource().getPlayer())) {
             ctx.getSource().sendFailure(Component.literal("You are already in a teleport!"));
             return 0;
+          } else if (Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID().equals(player.getStringUUID())) {
+            ctx.getSource().sendFailure(Component.literal("You cannot send a teleport request to yourself!"));
+            return 0;
           } TpaManager.tpaRequests.put(
             Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID(),
             new Pair<>(player.getStringUUID(), true)
           ); ctx.getSource().sendSuccess(
             () -> Component.literal("Successfully sent a teleport request to ")
-              .append(Component.literal(player.getStringUUID()).withStyle(ChatFormatting.BOLD))
+              .append(Component.literal(player.getScoreboardName()).withStyle(ChatFormatting.BOLD))
               .append("."),
             false
           ); GuiManager.display(

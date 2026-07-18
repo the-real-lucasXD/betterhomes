@@ -80,7 +80,7 @@ public class TeleportCountdown {
   }
   
   public static boolean inCountdown(ServerPlayer player) {
-    if (getCountdown(player) == null) return false;
-    return !TpaManager.tpaRequests.containsKey(player.getStringUUID());
+    if (getCountdown(player) != null) return true;
+    return TpaManager.tpaRequests.containsKey(player.getStringUUID());
   }
 }

@@ -19,7 +19,9 @@
     "teleport.cancellers.Movement",
     "teleport.commands.TpAcceptCommand",
     "teleport.commands.TpaCommand",
-    "teleport.commands.TpaHereCommand"
+    "teleport.commands.TpaHereCommand",
+    "teleport.commands.TpCancelCommand",
+    "teleport.commands.TpDenyCommand"
   ],
   "injectors": {
     "defaultRequire": 1
