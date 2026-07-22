@@ -30,6 +30,10 @@ public class TeleportCountdown {
   public static ConcurrentHashMap<String, TeleportCountdown> countdowns = new ConcurrentHashMap<>();
 
   public TeleportCountdown(LocationData destination, ServerPlayer player) {
+    if (Betterhomes.configs().teleportCountdownTicks.get() == 0) {
+      destination.teleport(player);
+      return;
+    }
     ticks = Betterhomes.configs().teleportCountdownTicks.get()+1;
     this.destination = destination;
     this.player = player.getStringUUID();

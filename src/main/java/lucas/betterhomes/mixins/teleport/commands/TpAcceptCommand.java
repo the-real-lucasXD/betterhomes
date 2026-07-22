@@ -4,12 +4,13 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.datafixers.util.Pair;
 import lucas.betterhomes.Betterhomes;
 import lucas.betterhomes.gui.GuiManager;
-import lucas.betterhomes.teleport.LocationData;
+import lucas.betterhomes.teleport.DynamicLocationData;
 import lucas.betterhomes.teleport.TeleportCountdown;
 import lucas.betterhomes.teleport.TpaManager;
 import net.minecraft.commands.*;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,17 +42,22 @@ public class TpAcceptCommand {
           ); for (Pair<String, Boolean> request : requests) {
             if (request.getFirst().equals(player.getStringUUID())) {
               if (request.getSecond()) {
-                new TeleportCountdown(new LocationData(ctx.getSource().getPlayer()), player);
+                new DynamicLocationData(ctx.getSource().getPlayer()).teleport(player);
                 TpaManager.tpaRequests.remove(player.getStringUUID());
-                return 0;
               } else if (!TeleportCountdown.inCountdown(ctx.getSource().getPlayer())) {
-                new TeleportCountdown(new LocationData(player), ctx.getSource().getPlayer());
+                new DynamicLocationData(player).teleport(ctx.getSource().getPlayer());
                 TpaManager.tpaRequests.remove(player.getStringUUID());
-                return 0;
               } else {
                 ctx.getSource().sendFailure(Component.literal("You are currently in a teleport!"));
                 return 0;
-              }
+              } ctx.getSource().sendSuccess(
+                () -> Component.literal("Successfully accepted " + player.getScoreboardName() + "'s TPA request."),
+                false
+              ); player.sendSystemMessage(
+                Component.literal(ctx.getSource().getTextName() + " accepted your TPA request!")
+                  .withColor(TextColor.GREEN),
+                false
+              ); return 0;
             }
           } ctx.getSource().sendFailure(Component.literal("This player has not sent you an active request!"));
           return 0;
@@ -75,8 +81,7 @@ public class TpAcceptCommand {
             new Pair<>("options", GuiManager.loop(
               "select-tpa-option", TpaManager::getVars, new ArrayList<>(requests))
             )
-          );
-          return 0;
+          ); return 0;
         }
       })
     );
