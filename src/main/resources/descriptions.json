@@ -1,8 +1,6 @@
 {
   "teleportCountdownTicks": "How many ticks should pass before teleporting the player, starting from when the teleportation is triggerred.",
 
-  "teleportCooldownTicks": "How many ticks should pass before the player can trigger a teleport again, starting from when the player is last teleported.",
-
   "cancelTeleportOnMove": "Whether the player can move about when waiting for the teleport countdown.",
 
   "cancelTeleportOnHurt": "Whether the teleportation should be cancelled if the player is hurt by any source during the teleport countdown.",
@@ -11,17 +9,11 @@
 
   "cancelTeleportOnChatMessage": "Whether the teleportation should be cancelled if the player sends any chat messages.",
 
-  "startTeleportWhileMoving": "Whether the teleportation should be triggered if the player is moving (flying, falling, walking, etc).",
-
   "enablePhomes": "Whether public homes should be created or teleported to.",
 
   "phomeLimit": "How many public homes can be collectively created. Has priority over phomeLimitPerPlayer, set to 0 for no limit",
 
-  "phomeLimitPerPlayer": "How many public homes can be created per player. Set to 0 for no limit.",
-
   "modifyOtherPhomes": "Whether players can edit (rename, change location of, etc) public homes that are not created by them.",
-
-  "viewPhomeLocation": "Whether players can view locations of public homes directly without teleporting to them",
 
   "enableHomes": "Whether private homes should be created or teleported to.",
 
@@ -33,5 +25,7 @@
 
   "useDialogs": "Whether to prioritize using dialogs to display any menus. When disabled, chat and inbluit GUI (e.g. chests) will be used instead. Suitable for servers that backport to before 1.21.6.",
 
-  "enableTpa": "Whether the player should be able to teleport to other players/allow other players to teleport to them."
+  "enableTpa": "Whether the player should be able to teleport to other players/allow other players to teleport to them.",
+
+  "tpaExpiryTicks": "How many ticks should go by before a TPA request expires, starting from when it is created."
 }

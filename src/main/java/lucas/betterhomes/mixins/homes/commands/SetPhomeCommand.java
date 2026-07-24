@@ -43,6 +43,10 @@ public class SetPhomeCommand {
           if (homes.containsKey(name)) {
             GuiManager.display("override-home", ctx.getSource().getPlayer(), new Pair<>("name", name), new Pair<>("type", "phome"));
             return 0;
+          } int maxHomes = Betterhomes.configs().phomeLimit.get();
+          if (maxHomes != 0 && homes.size() >= maxHomes) {
+            ctx.getSource().sendFailure(Component.literal("The limit of " + maxHomes + " phomes has been reached!"));
+            return 0;
           }
           
           homes.put(name, new Phome(ctx.getSource().getPlayer(), name));

@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static net.minecraft.commands.Commands.argument;
@@ -33,13 +34,27 @@ public class EditPhomeCommand {
       .requires(source -> Betterhomes.configs().enablePhomes.get()
         || source.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
       .then(argument("name", StringArgumentType.word())
-        .suggests((_, builder) ->
-          SharedSuggestionProvider.suggest(TeleportManager.INSTANCE.phomes.values().stream().map(Home::getName), builder)
+        .suggests((ctx, builder) ->
+          SharedSuggestionProvider.suggest(
+            TeleportManager.INSTANCE.phomes.values().stream().map(Home::getName).filter(phome -> {
+              if (!Betterhomes.configs().modifyOtherPhomes.get())
+                return TeleportManager.INSTANCE.phomes.get(phome).creator.equals(
+                  Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID()
+                );
+              else return true;
+            }),
+            builder
+          )
         ).then(literal("sethere")
           .executes(ctx -> {
             Phome home = TeleportManager.INSTANCE.phomes.get(StringArgumentType.getString(ctx, "name"));
             if (home == null) {
               ctx.getSource().sendFailure(Component.literal("Cannot perform modification: Unrecognised name."));
+              return 0;
+            } if (!Betterhomes.configs().modifyOtherPhomes.get() &&
+              !home.creator.equals(Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID())
+            ) {
+              ctx.getSource().sendFailure(Component.literal("You cannot modify phomes not created by you!"));
               return 0;
             } home.setLocation(ctx.getSource().getPlayer());
             ctx.getSource().sendSuccess(
@@ -55,6 +70,11 @@ public class EditPhomeCommand {
               Phome home = TeleportManager.INSTANCE.phomes.get(StringArgumentType.getString(ctx, "name"));
               if (home == null) {
                 ctx.getSource().sendFailure(Component.literal("Cannot perform modification: Unrecognised name."));
+                return 0;
+              } if (!Betterhomes.configs().modifyOtherPhomes.get() &&
+                !home.creator.equals(Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID())
+              ) {
+                ctx.getSource().sendFailure(Component.literal("You cannot modify phomes not created by you!"));
                 return 0;
               } home.setDescription(StringArgumentType.getString(ctx, "description"), ctx.getSource().getPlayer());
               ctx.getSource().sendSuccess(
@@ -73,11 +93,15 @@ public class EditPhomeCommand {
               if (home == null) {
                 ctx.getSource().sendFailure(Component.literal("Cannot perform modification: Unrecognised name."));
                 return 0;
+              } if (!Betterhomes.configs().modifyOtherPhomes.get() &&
+                !home.creator.equals(Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID())
+              ) {
+                ctx.getSource().sendFailure(Component.literal("You cannot modify phomes not created by you!"));
+                return 0;
               } if (homes.containsKey(StringArgumentType.getString(ctx, "newname"))) {
                 ctx.getSource().sendFailure(
                   Component.literal("Cannot perform modification: A phome exists with the entered name.")
-                );
-                return 0;
+                ); return 0;
               } home.setName(StringArgumentType.getString(ctx, "newname"), ctx.getSource().getPlayer());
               homes.put(StringArgumentType.getString(ctx, "newname"), home);
               homes.remove(StringArgumentType.getString(ctx, "name"));

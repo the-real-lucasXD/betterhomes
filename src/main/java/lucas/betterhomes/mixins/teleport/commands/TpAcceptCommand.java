@@ -39,27 +39,34 @@ public class TpAcceptCommand {
           ServerPlayer player = EntityArgument.getPlayer(ctx, "player");
           ArrayList<Pair<String, Boolean>> requests = TpaManager.getSender(
             Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID()
-          ); for (Pair<String, Boolean> request : requests) {
+          );
+          for (Pair<String, Boolean> request : requests) {
             if (request.getFirst().equals(player.getStringUUID())) {
               if (request.getSecond()) {
                 new DynamicLocationData(ctx.getSource().getPlayer()).teleport(player);
                 TpaManager.tpaRequests.remove(player.getStringUUID());
+                TpaManager.ticks.remove(player.getStringUUID());
               } else if (!TeleportCountdown.inCountdown(ctx.getSource().getPlayer())) {
                 new DynamicLocationData(player).teleport(ctx.getSource().getPlayer());
                 TpaManager.tpaRequests.remove(player.getStringUUID());
+                TpaManager.ticks.remove(player.getStringUUID());
               } else {
                 ctx.getSource().sendFailure(Component.literal("You are currently in a teleport!"));
                 return 0;
-              } ctx.getSource().sendSuccess(
+              }
+              ctx.getSource().sendSuccess(
                 () -> Component.literal("Successfully accepted " + player.getScoreboardName() + "'s TPA request."),
                 false
-              ); player.sendSystemMessage(
+              );
+              player.sendSystemMessage(
                 Component.literal(ctx.getSource().getTextName() + " accepted your TPA request!")
                   .withColor(TextColor.GREEN),
                 false
-              ); return 0;
+              );
+              return 0;
             }
-          } ctx.getSource().sendFailure(Component.literal("This player has not sent you an active request!"));
+          }
+          ctx.getSource().sendFailure(Component.literal("This player has not sent you an active request!"));
           return 0;
         })
       ).executes(ctx -> {

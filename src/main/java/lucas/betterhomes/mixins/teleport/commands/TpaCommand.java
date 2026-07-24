@@ -41,10 +41,10 @@ public class TpaCommand {
           } else if (Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID().equals(player.getStringUUID())) {
             ctx.getSource().sendFailure(Component.literal("You cannot send a teleport request to yourself!"));
             return 0;
-          } TpaManager.tpaRequests.put(
-            Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID(),
-            new Pair<>(player.getStringUUID(), true)
-          ); ctx.getSource().sendSuccess(
+          } Pair<String, Boolean> toAdd = new Pair<>(player.getStringUUID(), true);
+          TpaManager.tpaRequests.put(Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID(), toAdd);
+          TpaManager.ticks.put(Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID(), Betterhomes.configs().tpaExpiryTicks.get());
+          ctx.getSource().sendSuccess(
             () -> Component.literal("Successfully sent a teleport request to ")
               .append(Component.literal(player.getScoreboardName()).withStyle(ChatFormatting.BOLD))
               .append("."),

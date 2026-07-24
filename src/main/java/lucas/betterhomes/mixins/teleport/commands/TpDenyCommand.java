@@ -8,6 +8,7 @@ import lucas.betterhomes.teleport.TpaManager;
 import net.minecraft.commands.*;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,10 +40,15 @@ public class TpDenyCommand {
           ); for (Pair<String, Boolean> request : requests) {
             if (request.getFirst().equals(player.getStringUUID())) {
               player.sendSystemMessage(
-                Component.literal(ctx.getSource().getPlayer().getScoreboardName() + " has denied your TPA request!"),
-                false
+                Component.literal(
+                  ctx.getSource().getPlayer().getScoreboardName() + " has denied your TPA request!"
+                ).withColor(TextColor.RED), false
               ); TpaManager.tpaRequests.remove(player.getStringUUID());
-              return 0;
+              TpaManager.ticks.remove(player.getStringUUID());
+              ctx.getSource().sendSuccess(
+                () -> Component.literal("Successfully denied " + player.getScoreboardName() + "'s TPA request."),
+                false
+              ); return 0;
             }
           } ctx.getSource().sendFailure(Component.literal("This player has not sent you an active request!"));
           return 0;
@@ -66,8 +72,7 @@ public class TpDenyCommand {
             new Pair<>("options", GuiManager.loop(
               "select-tpa-option", TpaManager::getVars, new ArrayList<>(requests))
             )
-          );
-          return 0;
+          ); return 0;
         }
       })
     );

@@ -29,6 +29,7 @@ public class TpCancelCommand {
         TeleportCountdown countdown = TeleportCountdown.getCountdown(Objects.requireNonNull(player));
         if (countdown != null) countdown.cancel();
         TpaManager.tpaRequests.remove(player.getStringUUID());
+        TpaManager.ticks.remove(player.getStringUUID());
         return 0;
       })
     );

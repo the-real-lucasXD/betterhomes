@@ -40,10 +40,10 @@ public class TpaHereCommand {
           } if (TpaManager.tpaRequests.containsKey(ctx.getSource().getPlayer().getStringUUID())) {
             ctx.getSource().sendFailure(Component.literal("You already have a teleport request!"));
             return 0;
-          } TpaManager.tpaRequests.put(
-            Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID(),
-            new Pair<>(player.getStringUUID(), false)
-          ); ctx.getSource().sendSuccess(
+          } Pair<String, Boolean> toAdd = new Pair<>(player.getStringUUID(), false);
+          TpaManager.ticks.put(Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID(), Betterhomes.configs().tpaExpiryTicks.get());
+          TpaManager.tpaRequests.put(Objects.requireNonNull(ctx.getSource().getPlayer()).getStringUUID(), toAdd);
+          ctx.getSource().sendSuccess(
             () -> Component.literal("Successfully sent a teleport request to ")
               .append(Component.literal(player.getScoreboardName()).withStyle(ChatFormatting.BOLD))
               .append("."),

@@ -3,8 +3,9 @@
   "package": "lucas.betterhomes.mixins",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "TeleportCommand",
     "homes.InitializePlayerHomes",
+    "homes.commands.DeleteHomeCommand",
+    "homes.commands.DeletePhomeCommand",
     "homes.commands.EditHomeCommand",
     "homes.commands.EditPhomeCommand",
     "homes.commands.HomeCommand",

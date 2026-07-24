@@ -1,10 +1,7 @@
 package lucas.betterhomes.homes;
 
-import lucas.betterhomes.Betterhomes;
 import lucas.betterhomes.teleport.LocationData;
-import lucas.betterhomes.teleport.TeleportCountdown;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.permissions.Permissions;
 
 public class Home {
   LocationData location;
@@ -16,11 +13,7 @@ public class Home {
   }
   
   public void teleport(ServerPlayer player) {
-    if (
-      Betterhomes.configs().teleportCountdownTicks.get() == 0 ||
-      player.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER)
-    ) location.teleport(player);
-    else new TeleportCountdown(location, player);
+    location.teleport(player);
   }
   
   public void setLocation(ServerPlayer source) {

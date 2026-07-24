@@ -33,21 +33,18 @@ public class ConfigManager {
   }
 
   public Config<Integer> teleportCountdownTicks = new Config<>(60, "teleportCountdownTicks");
-  public Config<Integer> teleportCooldownTicks = new Config<>(400, "teleportCooldownTicks");
   public Config<Boolean> cancelTeleportOnMove = new Config<>(false, "cancelTeleportOnMove");
   public Config<Boolean> cancelTeleportOnHurt = new Config<>(true, "cancelTeleportOnHurt");
   public Config<Boolean> cancelTeleportOnPlayerHurt = new Config<>(true, "cancelTeleportOnPlayerHurt");
   public Config<Boolean> cancelTeleportOnChatMessage = new Config<>(true, "cancelTeleportOnChatMessage");
-  public Config<Boolean> startTeleportWhileMoving = new Config<>(false, "startTeleportWhileMoving");
   public Config<Boolean> enablePhomes = new Config<>(true, "enablePhomes");
   public Config<Integer> phomeLimit = new Config<>(0, "phomeLimit");
-  public Config<Integer> phomeLimitPerPlayer = new Config<>(0, "phomeLimitPerPlayer");
   public Config<Boolean> modifyOtherPhomes = new Config<>(false, "modifyOtherPhomes");
-  public Config<Boolean> viewPhomeLocation = new Config<>(true, "viewPhomeLocation");
   public Config<Boolean> enableHomes = new Config<>(true, "enableHomes");
   public Config<Integer> homeLimit = new Config<>(5, "homeLimit");
   public Config<Boolean> teleportFacing = new Config<>(true, "teleportFacing");
   public Config<Boolean> takeEnderPearlDamage = new Config<>(false, "takeEnderPearlDamage");
   public Config<Boolean> useDialogs = new Config<>(true, "useDialogs");
   public Config<Boolean> enableTpa = new Config<>(true, "enableTpa");
+  public Config<Integer> tpaExpiryTicks = new Config<>(600, "tpaExpiryTicks");
 }

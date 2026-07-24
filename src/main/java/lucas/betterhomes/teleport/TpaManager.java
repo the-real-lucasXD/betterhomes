@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TpaManager {
   public static ConcurrentHashMap<String, Pair<String, Boolean>> tpaRequests = new ConcurrentHashMap<>();
+  public static ConcurrentHashMap<String, Integer> ticks = new ConcurrentHashMap<>();
 
   public static void teleport(String acceptor, Pair<String, Boolean> sender) {
     ServerPlayer receiver = Betterhomes.getPlayer(acceptor), requester = Betterhomes.getPlayer(sender.getFirst());

@@ -45,6 +45,10 @@ public class SetHomeCommand {
           if (homes.containsKey(name)) {
             GuiManager.display("override-home", ctx.getSource().getPlayer(), new Pair<>("name", name), new Pair<>("type", "home"));
             return 0;
+          } int maxHomes = Betterhomes.configs().homeLimit.get();
+          if (maxHomes != 0 && homes.size() >= maxHomes) {
+            ctx.getSource().sendFailure(Component.literal("The limit of " + maxHomes + " homes has been reached!"));
+            return 0;
           }
           
           homes.put(name, new Home(ctx.getSource().getPlayer(), name));

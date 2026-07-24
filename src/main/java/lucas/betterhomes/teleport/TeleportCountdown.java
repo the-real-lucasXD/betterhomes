@@ -62,7 +62,7 @@ public class TeleportCountdown {
     
     if (ticks == 0) {
       cancel();
-      destination.teleport(Betterhomes.getPlayer(this.player));
+      destination.teleport(Betterhomes.getPlayer(this.player), false);
     } else if (ticks%20 == 0) {
       ServerPlayer player = Betterhomes.getPlayer(this.player);
       
